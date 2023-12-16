@@ -1,3 +1,4 @@
 bin
 .vs
 appsettings.json
+bin/Debug/net7.0/appsettings.json

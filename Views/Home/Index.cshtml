@@ -30,20 +30,28 @@
     @if (Model.Any())
     {
         <div class="row">
-            @foreach (var product in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (product.Image != null && product.Image.File != null)
+                    {
                         <img src="@product.Image.File.Url" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title">@product.Name</h5>
-                            <p class="category">Category: @product.Category</p>
-                            <p class="card-text">@product.Description</p>
-                            <p class="card-text">Price: @product.Price</p>
-                        </div>
+                    }
+                    else
+                    {
+                        <!-- Placeholder image or a message indicating no image is available -->
+                        <img src="../wwwroot/images/no image.jpg" class="card-img-top" alt="Default Image">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="category">Category: @product.Category</p>
+                        <p class="card-text">@product.Description</p>
+                        <p class="card-text">Price: @product.Price</p>
                     </div>
                 </div>
-            }
+            </div>
+        }
         </div>
     }
 else

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TestApp.Models;
 using Contentful.Core;
+using Contentful.Core.Search;
 
 namespace TestApp.Controllers;
 
@@ -20,11 +21,9 @@ public class HomeController : Controller
     {
         var products = await _client.GetEntries<Product>();
 
-        foreach (var product in products)
-        {
-            // product.Category = await _client.GetEntry<Category>(product.Category));
-            Console.WriteLine(product);
-        }
+        //foreach (var product in products)
+        //{
+        //}
 
         return View(products);
     }
