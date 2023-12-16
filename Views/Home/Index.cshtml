@@ -1,0 +1,53 @@
+﻿@using Contentful.Core.Models
+
+@model ContentfulCollection<Product>
+    
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>This is the app we will build</h1>
+
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <form method="post" action="/HomeController/HandleForm">
+            <!-- Your form fields go here -->
+            <input type="text" name="productName" placeholder="Product Name" />
+            <input type="submit" value="Submit" />
+        </form>
+
+    </div>
+
+    <!-- Filter Options -->
+    <div class="mb-3">
+        <label for="categoryFilter">Filter by Category:</label>
+        <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <!-- Add options dynamically based on your categories -->
+        </select>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="@product.Image.File.Url" class="card-img-top" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="category">Category: @product.Category</p>
+                            <p class="card-text">@product.Description</p>
+                            <p class="card-text">Price: @product.Price</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+else
+{
+    <p>No products available.</p>
+}
+
