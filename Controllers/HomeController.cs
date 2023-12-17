@@ -49,40 +49,32 @@ public class HomeController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Index(string searchQuery)
+    public async Task<IActionResult> Index(string searchQuery, string categoryFilter)
     {
-        ;
+        var productQuery = QueryBuilder<Product>.New.ContentTypeIs("product");
 
         if (!string.IsNullOrEmpty(searchQuery))
         {
-            //Filter products based on the searchQuery
-            //products = products.Where(p => p.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
-            var qb = QueryBuilder<Product>.New.ContentTypeIs("product").FieldMatches("fields.name", searchQuery);
-            var products = await _client.GetEntries(qb);
-            var qb2 = QueryBuilder<Category>.New.ContentTypeIs("category");
-            var categories = await _client.GetEntries(qb2);
-            var viewModel = new ProductCategoryViewModel
-            {
-                Products = products,
-                Categories = categories
-            };
-            //var entries = await _client.GetEntriesByType<Product>($"?content_type=product&fields.Name[match]={searchQuery}");
-            return View(viewModel);
+            productQuery = productQuery.FieldMatches("fields.name", searchQuery);
         }
-        else
-        {
-            var qbNonSearch = QueryBuilder<Product>.New.ContentTypeIs("product");
-            var products = await _client.GetEntries<Product>(qbNonSearch);
 
-            var qb2 = QueryBuilder<Category>.New.ContentTypeIs("category");
-            var categories = await _client.GetEntries(qb2);
-            var viewModel = new ProductCategoryViewModel
-            {
-                Products = products,
-                Categories = categories
-            };
-            return View(viewModel);
+        if (!string.IsNullOrEmpty(categoryFilter))
+        {
+            productQuery = productQuery.FieldEquals("fields.category.sys.id", categoryFilter);
         }
+
+        var products = await _client.GetEntries(productQuery);
+
+        var categoryQuery = QueryBuilder<Category>.New.ContentTypeIs("category");
+        var categories = await _client.GetEntries(categoryQuery);
+
+        var viewModel = new ProductCategoryViewModel
+        {
+            Products = products,
+            Categories = categories
+        };
+
+        return View(viewModel);
     }
 
 

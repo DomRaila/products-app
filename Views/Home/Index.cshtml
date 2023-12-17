@@ -5,27 +5,29 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <!-- Search Bar -->
 <div class="mb-3">
     <form method="post" asp-action="Index">
-        <input type="text" name="searchQuery" placeholder="Product Name" />
+        <!-- Search Bar --->
+        <div>
+            <input type="text" name="searchQuery" placeholder="Product Name" />
+        </div>
+
+        <!-- Filter Options -->
+        <div>
+            <label for="categoryFilter">Filter by Category:</label>
+            <select name="categoryFilter" id="categoryFilter">
+                <option value="">All Categories</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Sys.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
         <input type="submit" value="Submit" />
     </form>
 </div>
 
-    <!-- Filter Options -->
-    <div class="mb-3">
-        <label for="categoryFilter">Filter by Category:</label>
-        <select id="categoryFilter">
-        <option value="">All Categories</option>
-        @foreach (var category in Model.Categories)
-        {
-            <option value="">@category.Name</option>
-        }
-
-            <!-- Add options dynamically based on your categories -->
-        </select>
-    </div>
 
 <div class="row">
 @foreach (var product in Model.Products)
