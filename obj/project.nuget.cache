@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YvT6OYDURMv2kN9mVh8ikxDCBEhyB2jjFL0V273dxH5hKpnojmQQD5T/yBVuRQbz2U7MTOEQ6/wojBhhwTrDkw==",
+  "dgSpecHash": "p8RZigzsFEmKLLCbr6b3MPKAjiMHz4BK8A5JCluuPwKDQW0lokXW82dG0yU6jpqAVoAwc7UALvSBzllwf9SFYw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Domin\\Desktop\\DevOPS\\TestApp\\TestApp.csproj",
   "expectedPackageFiles": [
@@ -66,6 +66,7 @@
     "C:\\Users\\Domin\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\Domin\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\Domin\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\Domin\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512",
     "C:\\Users\\Domin\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Domin\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\Domin\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",

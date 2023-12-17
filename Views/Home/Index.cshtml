@@ -1,4 +1,5 @@
-﻿@using Contentful.Core.Models
+﻿@model TestApp.Models.ProductCategoryViewModel
+
     
 @{
     ViewData["Title"] = "Home Page";
@@ -6,7 +7,7 @@
 
     <!-- Search Bar -->
 <div class="mb-3">
-    <form method="get" asp-action="Index">
+    <form method="post" asp-action="Index">
         <input type="text" name="searchQuery" placeholder="Product Name" />
         <input type="submit" value="Submit" />
     </form>
@@ -16,13 +17,18 @@
     <div class="mb-3">
         <label for="categoryFilter">Filter by Category:</label>
         <select id="categoryFilter">
-            <option value="">All Categories</option>
+        <option value="">All Categories</option>
+        @foreach (var category in Model.Categories)
+        {
+            <option value="">@category.Name</option>
+        }
+
             <!-- Add options dynamically based on your categories -->
         </select>
     </div>
 
 <div class="row">
-@foreach (var product in Model)
+@foreach (var product in Model.Products)
 {
     <div class="col-md-4">
         <div class="card product-card">
@@ -38,8 +44,7 @@
             <div class="card-body">
                 <h5 class="card-title">@product.Name</h5>
 
-                @* <p class="category">Category: @product.Category</p> *@
-                <p class="category">Category: @product.Categories</p>
+                <p class="category">Category: @product.Category.Name</p>
                 @* <p class="card-text">@product.Description</p> *@
                 <p class="card-text">Price: @product.Price</p>
                 <p class="button">

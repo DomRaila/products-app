@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TestApp.Models;
 using Contentful.Core;
 using Contentful.Core.Search;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Xml.Linq;
 
 namespace TestApp.Controllers;
 
@@ -22,9 +24,17 @@ public class HomeController : Controller
         //var products = await _client.GetEntries<Product>();
 
         var qb = QueryBuilder<Product>.New.ContentTypeIs("product");
-        var entries = await _client.GetEntries(qb);
+        var products = await _client.GetEntries(qb);
+        var qb2 = QueryBuilder<Category>.New.ContentTypeIs("category");
+        var categories = await _client.GetEntries(qb2);
 
-        return View(entries);
+        var viewModel = new ProductCategoryViewModel
+        {
+            Products = products,
+            Categories = categories
+        };
+
+        return View(viewModel);
     }
 
     public async Task<IActionResult> Content(string id)
@@ -41,15 +51,38 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(string searchQuery)
     {
-        var products = await _client.GetEntries<Product>();
+        ;
 
         if (!string.IsNullOrEmpty(searchQuery))
         {
             //Filter products based on the searchQuery
             //products = products.Where(p => p.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+            var qb = QueryBuilder<Product>.New.ContentTypeIs("product").FieldMatches("fields.name", searchQuery);
+            var products = await _client.GetEntries(qb);
+            var qb2 = QueryBuilder<Category>.New.ContentTypeIs("category");
+            var categories = await _client.GetEntries(qb2);
+            var viewModel = new ProductCategoryViewModel
+            {
+                Products = products,
+                Categories = categories
+            };
+            //var entries = await _client.GetEntriesByType<Product>($"?content_type=product&fields.Name[match]={searchQuery}");
+            return View(viewModel);
         }
+        else
+        {
+            var qbNonSearch = QueryBuilder<Product>.New.ContentTypeIs("product");
+            var products = await _client.GetEntries<Product>(qbNonSearch);
 
-        return View(products.ToList());
+            var qb2 = QueryBuilder<Category>.New.ContentTypeIs("category");
+            var categories = await _client.GetEntries(qb2);
+            var viewModel = new ProductCategoryViewModel
+            {
+                Products = products,
+                Categories = categories
+            };
+            return View(viewModel);
+        }
     }
 
 
