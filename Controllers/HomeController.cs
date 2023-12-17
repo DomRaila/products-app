@@ -39,7 +39,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Content(string id)
     {
-        //var products = await _client.GetEntries<Product>();
         var builder = new QueryBuilder<Product>().FieldEquals(f => f.Sys.Id, id).Include(2);
         var entry = (await _client.GetEntries(builder)).FirstOrDefault();
 
@@ -50,29 +49,38 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(string searchQuery, string categoryFilter)
     {
+        // Create a query builder for the 'product' content type
         var productQuery = QueryBuilder<Product>.New.ContentTypeIs("product");
 
+        // Apply search query filter if provided
         if (!string.IsNullOrEmpty(searchQuery))
         {
             productQuery = productQuery.FieldMatches("fields.name", searchQuery);
         }
 
+        // Apply category filter if provided
         if (!string.IsNullOrEmpty(categoryFilter))
         {
             productQuery = productQuery.FieldEquals("fields.category.sys.id", categoryFilter);
         }
 
+        // Retrieve products based on the constructed query
         var products = await _client.GetEntries(productQuery);
 
+        // Create a query builder for the 'category' content type
         var categoryQuery = QueryBuilder<Category>.New.ContentTypeIs("category");
+
+        // Retrieve all categories
         var categories = await _client.GetEntries(categoryQuery);
 
+        // Create a view model to pass data to the view
         var viewModel = new ProductCategoryViewModel
         {
             Products = products,
             Categories = categories
         };
 
+        // Return the view with the populated view model
         return View(viewModel);
     }
 

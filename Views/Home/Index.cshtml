@@ -47,7 +47,6 @@
                 <h5 class="card-title">@product.Name</h5>
 
                 <p class="category">Category: @product.Category.Name</p>
-                @* <p class="card-text">@product.Description</p> *@
                 <p class="card-text">Price: @product.Price</p>
                 <p class="button">
                     <a asp-controller="Home" asp-action="Content" asp-route-id="@product.Sys.Id" class="btn btn-primary" role="button">More about the product</a>
