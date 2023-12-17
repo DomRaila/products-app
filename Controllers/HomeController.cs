@@ -19,26 +19,37 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var products = await _client.GetEntries<Product>();
+        //var products = await _client.GetEntries<Product>();
 
-        //foreach (var product in products)
-        //{
-        //}
+        var qb = QueryBuilder<Product>.New.ContentTypeIs("product");
+        var entries = await _client.GetEntries(qb);
 
-        return View(products);
+        return View(entries);
     }
 
-    [HttpPost]
-    public IActionResult HandleForm(string productName, string productDescription, decimal productPrice)
+    public async Task<IActionResult> Content(string id)
     {
-        // Handle the form data here
-        // You can perform any necessary processing with the form data
+        //var products = await _client.GetEntries<Product>();
 
-        // Example: Log the form data
-        Console.WriteLine($"Received form data: Name={productName}, Description={productDescription}, Price={productPrice}");
+        var qb = QueryBuilder<Product>.New.ContentTypeIs("product").FieldEquals(f => f.Sys.Id, id);
+        var entry = await _client.GetEntries(qb);
 
-        // Redirect or return a response as needed
-        return RedirectToAction("Index");
+        return View(entry);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Index(string searchQuery)
+    {
+        var products = await _client.GetEntries<Product>();
+
+        if (!string.IsNullOrEmpty(searchQuery))
+        {
+            //Filter products based on the searchQuery
+            //products = products.Where(p => p.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return View(products.ToList());
     }
 
 
