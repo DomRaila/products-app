@@ -6,16 +6,16 @@
 }
 
 <div class="mb-3">
-    <form method="post" asp-action="Index">
-        <!-- Search Bar --->
-        <div>
-            <input type="text" name="searchQuery" placeholder="Product Name" />
+    <form method="post" asp-action="Index" class="form-inline">
+        <!-- Search Bar -->
+        <div class="form-group mb-2">
+            <input type="text" class="form-control" name="searchQuery" placeholder="Product Name" />
         </div>
 
         <!-- Filter Options -->
-        <div>
-            <label for="categoryFilter">Filter by Category:</label>
-            <select name="categoryFilter" id="categoryFilter">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="categoryFilter" class="sr-only">Filter by Category:</label>
+            <select name="categoryFilter" id="categoryFilter" class="form-control">
                 <option value="">All Categories</option>
                 @foreach (var category in Model.Categories)
                 {
@@ -24,7 +24,7 @@
             </select>
         </div>
 
-        <input type="submit" value="Submit" />
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </form>
 </div>
 

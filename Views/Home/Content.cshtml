@@ -1,23 +1,24 @@
-﻿@using Contentful.Core.Models
+﻿@model TestApp.Models.Product
 @{
     ViewData["Title"] = "Products";
 }
 <div class="row">
-
-    @foreach (var product in Model)
-    {
-        <div class="col-4">
-            <h2 class="card-title">@product.Name</h2>
-            <div class="card">
-                <img class="card-img-top" src="@product.Category.First().File.Url?w=120" />
+    <!-- Product Image Column -->
+    <div class="col-md-4">
+        <div class="card">
+            <img class="card-img-top" src="@Model.Image.File.Url?w=120" alt="Product Image">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
             </div>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">@product.Name</h5>
-            <p>Description: @product.Description</p>
-            <p class="button">
-                <a asp-controller="Products" asp-action="Index" asp-route-id="@product.Sys.Id" class="btn btn-primary" role="button">Go back</a>
-            </p>
+    </div>
+
+    <!-- Product Details Column -->
+    <div class="col-md-8">
+        <div class="product-details">
+            <h2>@Model.Name</h2>
+            <p class="product-description">Description: @Model.Description</p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3" role="button">Go back</a>
         </div>
-    }
+    </div>
 </div>

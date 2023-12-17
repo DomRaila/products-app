@@ -40,9 +40,8 @@ public class HomeController : Controller
     public async Task<IActionResult> Content(string id)
     {
         //var products = await _client.GetEntries<Product>();
-
-        var qb = QueryBuilder<Product>.New.ContentTypeIs("product").FieldEquals(f => f.Sys.Id, id);
-        var entry = await _client.GetEntries(qb);
+        var builder = new QueryBuilder<Product>().FieldEquals(f => f.Sys.Id, id).Include(2);
+        var entry = (await _client.GetEntries(builder)).FirstOrDefault();
 
         return View(entry);
     }
